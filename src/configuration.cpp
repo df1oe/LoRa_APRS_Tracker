@@ -82,8 +82,8 @@ Configuration ConfigurationManagement::readConfiguration()
 	conf.digi.beacon				= data["digi"]["beacon"]					| true;
 	conf.digi.beaconTimeout			= data["digi"]["beacon_timeout"]			| 30;
 
-	conf.lora.frequencyRx			= data["lora"]["frequency_rx"]				| 433775000;
-	conf.lora.frequencyTx			= data["lora"]["frequency_tx"]				| 433775000;
+	conf.lora.frequencyRx			= data["lora"]["frequency_rx"]				;
+	conf.lora.frequencyTx			= data["lora"]["frequency_tx"]				;
 	conf.lora.power					= data["lora"]["power"]						| 20;
 	conf.lora.spreadingFactor		= data["lora"]["spreading_factor"]			| 12;
 	conf.lora.signalBandwidth		= data["lora"]["signal_bandwidth"]			| 125000;
@@ -93,6 +93,7 @@ Configuration ConfigurationManagement::readConfiguration()
 	conf.display.overwritePin		= data["display"]["overwrite_pin"]			| 0;
 
 	conf.ftp.active					= data["ftp"]["active"]						| false;
+	conf.enable_data_injection	 	= data["enable_data_injection"]				| false;
 	JsonArray users					= data["ftp"]["user"].as<JsonArray>();
 	for(JsonVariant u : users)
 	{
@@ -160,6 +161,7 @@ void ConfigurationManagement::writeConfiguration(Configuration conf)
 	data["display"]["timeout"]				= conf.display.timeout;
 	data["display"]["overwrite_pin"]		= conf.display.overwritePin;
 	data["ftp"]["active"]					= conf.ftp.active;
+	data["enable_data_injection"]			= conf.enable_data_injection;
 	JsonArray users = data["ftp"].createNestedArray("user");
 	for(Configuration::Ftp::User u : conf.ftp.users)
 	{

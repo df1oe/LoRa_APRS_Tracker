@@ -164,8 +164,8 @@ else
 	if(send_update && gps.location.isValid() && gps_loc_update)
 	{
 	#ifdef 	TTGO_T_Beam_V1_0
-		String volts = "Bat.: " + powerManagement.getBatteryVoltageStr() + " V";
-        String amps = "Cur.:" + powerManagement.getBatteryChargeDischargeCurrentStr() + " mA";
+		String volts = "Bat: " + powerManagement.getBatteryVoltageStr() + " V";
+        String amps = "Cur:" + powerManagement.getBatteryChargeDischargeCurrentStr() + " mA";
 		String sats = String("Sats: ") + gps.satellites.value();
 		
 	#endif	
@@ -180,8 +180,14 @@ else
 		msg.setDestination("APLT0");
 		String lat = create_lat_aprs(gps.location.rawLat());
 		String lng = create_long_aprs(gps.location.rawLng());
-		
-		msg.getAPRSBody()->setData(String("=") + lat + Config.beacon.overlay + lng + Config.beacon.symbol + Config.beacon.message  + " - " + volts + " - " + amps + " - " + sats);
+		if (Config.enable_data_injection)
+		{
+		msg.getAPRSBody()->setData(String("=") + lat + Config.beacon.overlay + lng + Config.beacon.symbol + Config.beacon.message  + " - " + volts + " " + amps + " " + sats + " {data} ");
+		}
+		else
+		{
+		msg.getAPRSBody()->setData(String("=") + lat + Config.beacon.overlay + lng + Config.beacon.symbol + Config.beacon.message  + " - " + volts + " " + amps + " " + sats);	
+		}
 		String data = msg.encode();
 		Serial.println(data);
 		show_display("<< TX >>", data);
@@ -271,6 +277,7 @@ void setup_lora()
 		show_display("ERROR", "Starting LoRa failed!");
 		while (1);
 	}
+	LoRa.setFrequency(Config.lora.frequencyTx);
 	LoRa.setSpreadingFactor(Config.lora.spreadingFactor);
 	LoRa.setSignalBandwidth(Config.lora.signalBandwidth);
 	LoRa.setCodingRate4(Config.lora.codingRate4);

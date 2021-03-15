@@ -128,7 +128,9 @@ public:
 	LoRa lora;
 	Display display;
 	Ftp ftp;
+	bool enable_data_injection;
 	bool debug;
+	
 };
 
 class ConfigurationManagement

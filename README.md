@@ -44,7 +44,7 @@ It may possible i move too...
 * [ ] web-page sensors information
 * [ ] etc.
 
-# History
+## History
 
 01.03.2021  Forked
 05.03.2021  Moved configuration to json-file in filesystem
