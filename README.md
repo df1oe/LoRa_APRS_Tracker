@@ -45,6 +45,10 @@ It may possible i move too...
 * [ ] etc.
 
 ## History
+| Date | Changes |
+|-----------|----------------------------------------------------------|
+|01.03.2021|Forked|
+|05.03.2021| Moved configuration to json-file in filesystem |
+|16.03.2021| Added data_injection possibility in config|
 
-01.03.2021  Forked
-05.03.2021  Moved configuration to json-file in filesystem
+
